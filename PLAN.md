@@ -13,8 +13,8 @@
 ---
 
 ## 里程碑（Milestones）
-- M1 — toy数据的生成
-- M2 — 数据输入接口（完成：CSV/REST/WebSocket 支持）
+- M1 — toy数据的生成(orderbook.parquet和triggerInfo.parquet)
+- M2 — 数据输入接口（配置orderbook.parquet和triggerInfo.parquet的地址，并框定日期、票号、起始时间(或订单簿的某个index)、结束时间）
 - M3 — 基础可视化（深度图、订单流）
 - M4 — 交互与性能优化
 - M5 — 文档与示例数据，发布
