@@ -52,3 +52,4 @@
 - 我想要你用Python和plotly实现，可以用pandas，numpy,scipy，然后所有的class和函数都实现在一个py文件里
 - 再给一个使用它的demo，写在一个jupyterlab文件里面，import这个工具，还有相应的东西，读入toy数据，然后展示
 - toy文件可以生成在一个文件夹里，但是请务必注意，生成的toy文件必须是符合逻辑的！！！
+- 请用uv创建一个新的环境，安装需要的那几个库
