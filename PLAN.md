@@ -46,3 +46,9 @@
 - 废话一句，交易所里会为每个code维护一个orderbook
 - 在可视化的时候，orderbook的变化要展示出来，比如增加的部分(挂单或partial fill)要颜色深一点，消失的部分（cancel或成交）要颜色淡一点，蓝色代表买盘，红色代表卖盘
 - 可视化orderbook请使用柱状图，x轴是价格，y轴是量
+
+### 最终的呈现细节
+
+- 我想要你用Python和plotly实现，可以用pandas，numpy,scipy，然后所有的class和函数都实现在一个py文件里
+- 再给一个使用它的demo，写在一个jupyterlab文件里面，import这个工具，还有相应的东西，读入toy数据，然后展示
+- toy文件可以生成在一个文件夹里，但是请务必注意，生成的toy文件必须是符合逻辑的！！！

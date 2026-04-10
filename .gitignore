@@ -25,3 +25,6 @@ Thumbs.db
 *.h5
 *.hdf5
 *.parquet
+
+.vscode/
+.vscode/**
