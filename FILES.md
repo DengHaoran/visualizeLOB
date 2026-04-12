@@ -33,9 +33,9 @@ visualizeLOB/
 | 组件 | 类型 | 说明 |
 |------|------|------|
 | `InternalOrderBook` | class | 内部订单簿模拟引擎。维护买/卖盘字典，支持限价单提交（含价格优先撮合）和撤单。仅用于 toy 数据生成。 |
-| `generate_toy_data()` | function | 生成 toy 数据。初始化 10 档订单簿后随机产生事件（被动挂单 25%+25%、主动吃单 10%+10%、撤单 15%+15%），仅记录 Top-10 快照实际变化的帧。输出两个 parquet 文件。 |
+| `generate_toy_data()` | function | 生成 toy 数据。初始化 10 档订单簿后随机产生事件（被动挂单 25%+25%、主动吃单 10%+10%、撤单 15%+15%），仅记录 Top-10 快照实际变化的帧。输出两个 parquet 文件，并保证 `code` 为整型、`adjIndex` 单调递增但允许跳号。 |
 | `LOBDataLoader` | class | 数据加载器。读取 parquet，支持按 code / start_time / end_time / start_index / end_index 筛选，提供 `get_frame(pos)` 和 `get_trigger(pos)` 接口。 |
-| `LOBVisualizer` | class | 可视化器。`plot_single_frame(pos)` 生成静态柱状图（含差异高亮），`plot_animation(...)` 生成带播放/暂停/滑块的逐帧动画。 |
+| `LOBVisualizer` | class | 可视化器。`plot_single_frame(pos)` 生成堆叠式静态柱状图（base + delta + 分割线），`plot_animation(...)` 生成带播放/暂停/滑块和 triggerType 标签的逐帧动画。 |
 
 ### `demo.ipynb` — 演示 Notebook
 
@@ -53,8 +53,8 @@ visualizeLOB/
 
 | 列名 | 类型 | 说明 |
 |------|------|------|
-| `code` | str | 股票代码（"000001"） |
-| `adjIndex` | int | 帧索引，(code, adjIndex) 唯一定位一帧 |
+| `code` | int | 股票代码，数据层面为整型；展示时可格式化为 6 位（如 `000001`） |
+| `adjIndex` | int | 帧索引，(code, adjIndex) 唯一定位一帧；仅保证单调递增，不保证连续 |
 | `time` | datetime | 交易所时间戳 |
 | `serverTime` | datetime | 本地接收时间戳 |
 | `bidPx1`~`bidPx10` | float | 买盘 1~10 档价格 |
@@ -68,8 +68,8 @@ visualizeLOB/
 
 | 列名 | 类型 | 说明 |
 |------|------|------|
-| `code` | str | 股票代码 |
-| `adjIndex` | int | 对应帧索引（可通过 (code, adjIndex) merge 到 orderbook） |
+| `code` | int | 股票代码 |
+| `adjIndex` | int | 对应帧索引（可通过 (code, adjIndex) merge 到 orderbook），允许跳号 |
 | `triggerType` | str | "order"（限价单）或 "cancel"（撤单） |
 
 共 100 条（adjIndex 0 为初始状态无触发）。
