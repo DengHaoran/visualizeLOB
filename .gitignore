@@ -1,0 +1,17 @@
+# Python 缓存与字节码
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# uv / 虚拟环境(可由 `uv sync` 重建)
+.venv/
+
+# Jupyter 运行产物
+.ipynb_checkpoints/
+
+# toy 数据(可由 generate_toy_data() 重新生成)
+toy_data/
+
+# 临时文件
+*_executed.ipynb
+_*.html
