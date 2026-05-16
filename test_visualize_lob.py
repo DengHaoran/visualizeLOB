@@ -103,6 +103,19 @@ def test_generate_toy_data():
     check(os.path.exists(os.path.join(tmp, "orderbook.parquet")), "orderbook.parquet 已写出")
     check(os.path.exists(os.path.join(tmp, "triggerInfo.parquet")), "triggerInfo.parquet 已写出")
 
+    # ---- time / serverTime 为 HHMMSSmmm 整数 ----
+    check(str(ob_df["time"].dtype) == "int64", "time 列为整数")
+    check(str(ob_df["serverTime"].dtype) == "int64", "serverTime 列为整数")
+    for col in ("time", "serverTime"):
+        for t in ob_df[col]:                       # 逐个校验编码合法性
+            h, m, s, ms3 = t // 10**7, (t // 10**5) % 100, (t // 10**3) % 100, t % 1000
+            assert 0 <= h <= 23 and 0 <= m <= 59 and 0 <= s <= 59 and 0 <= ms3 <= 999, \
+                f"{col} 值 {t} 不是合法的 HHMMSSmmm 编码"
+    check(True, "time / serverTime 均为合法的 HHMMSSmmm 编码")
+    tval = ob_df["time"].tolist()                  # time 序列
+    check(all(tval[i] < tval[i + 1] for i in range(len(tval) - 1)), "time 逐帧严格递增")
+    check((ob_df["serverTime"] >= ob_df["time"]).all(), "每行 serverTime 不早于 time")
+
     # ---- adjIndex 单调递增且允许跳号; (code, adjIndex) 唯一 ----
     ai = ob_df["adjIndex"].tolist()                    # adjIndex 序列
     check(all(ai[i] < ai[i + 1] for i in range(len(ai) - 1)), "adjIndex 单调递增")

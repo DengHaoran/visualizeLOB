@@ -155,7 +155,7 @@ viz.plot_animation(start=10, end=40).show()    # 也可只回放某一段
 | --- | --- |
 | `generate_toy_data(out_dir, n_events, code, seed)` | 生成逻辑自洽的 toy 数据并写入 parquet。 |
 | `LOBDataLoader(orderbook_path, triggerinfo_path)` | 读取两个 parquet 文件。 |
-| `LOBDataLoader.filter(code, start_time, end_time, start_index, end_index)` | 按条件过滤，返回自身以支持链式调用。 |
+| `LOBDataLoader.filter(code, start_time, end_time, start_index, end_index)` | 按条件过滤，返回自身以支持链式调用。`start_time`/`end_time` 为 `HHMMSSmmm` 格式整数。 |
 | `LOBDataLoader.get_frame(pos)` | 取第 `pos` 帧（0 起下标），返回一个 `pandas.Series`。 |
 | `LOBDataLoader.get_trigger(pos)` | 取第 `pos` 帧的触发信息；初始帧返回 `None`。 |
 | `LOBVisualizer(loader, tick=None)` | 创建可视化器，`tick` 缺省时自动推断。 |
@@ -195,7 +195,7 @@ uv run jupyter nbconvert --to notebook --execute demo.ipynb --output _demo_execu
 | --- | --- | --- |
 | `code` | int | 股票代码 |
 | `adjIndex` | int | 帧索引，单调递增但**允许跳号** |
-| `time` / `serverTime` | datetime | 交易所时间 / 本地收到时间 |
+| `time` / `serverTime` | int | 交易所时间 / 本地收到时间，`HHMMSSmmm` 格式（如 `93949000` 表示 09:39:49.000） |
 | `bidPx1`–`bidPx10` / `bidVlm1`–`bidVlm10` | float / int | 买盘 1–10 档价格 / 挂单量 |
 | `askPx1`–`askPx10` / `askVlm1`–`askVlm10` | float / int | 卖盘 1–10 档价格 / 挂单量 |
 

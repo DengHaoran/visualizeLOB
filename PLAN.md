@@ -28,8 +28,8 @@
 - orderbook.parquet 包含的列有:
   - code: 股票代码（是int）
   - adjIndex: 任意一帧的订单簿的索引，（code, adjIndex）双元组可以精确定位到当天的任意票的某个状态，值得注意的是这个adjIndex并不一定是连续的整数，它可以跳过一些数字，但是确实对于每个票来说，它的adjIndex是单调递增的
-  - time: 对应的交易所的时间
-  - serverTime: 对应的本地收到行情的时间
+  - time: 对应的交易所的时间（是int，比如9:39:49：000就用93949000来表示，13：01：01：999就用130101999来表示）
+  - serverTime: 对应的本地收到行情的时间（格式同上）
   - bid(ask)Px1 -> bid(ask)Px10， 买(卖)盘的1档到10档价格
   - bid(ask)Vlm1 -> bid(ask)Vlm10， 买(卖)盘的1档到10档挂单量
 
